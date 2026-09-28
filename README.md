@@ -1,4 +1,4 @@
-# Claude Token Guard
+# Claude Usage Meter
 
 A status bar badge for VS Code that shows how much of your Claude Code 5-hour session you have used.
 
@@ -23,8 +23,8 @@ The badge is for information only. It does not block Claude Code.
 The extension is not on the Marketplace yet. To install it from source:
 
 ```sh
-git clone https://github.com/g13ydson/claude-token-guard.git ~/Projects/claude-token-guard
-ln -s ~/Projects/claude-token-guard ~/.vscode/extensions/local.claude-token-guard-0.0.1
+git clone https://github.com/g13ydson/claude-usage-meter.git ~/Projects/claude-usage-meter
+ln -s ~/Projects/claude-usage-meter ~/.vscode/extensions/local.claude-usage-meter-0.0.1
 ```
 
 Then run **Developer: Reload Window** in VS Code.
@@ -32,29 +32,29 @@ Then run **Developer: Reload Window** in VS Code.
 To try it without installing, start VS Code in extension development mode:
 
 ```sh
-code --extensionDevelopmentPath ~/Projects/claude-token-guard
+code --extensionDevelopmentPath ~/Projects/claude-usage-meter
 ```
 
 ## Usage
 
-- Click the badge, or run **Token Guard: Set limit** from the Command Palette, to change the limit.
-- Run **Token Guard: Refresh now** to update usage at once.
+- Click the badge, or run **Usage Meter: Set limit** from the Command Palette, to change the limit.
+- Run **Usage Meter: Refresh now** to update usage at once.
 - Hover over the badge to see the details.
 
 ### Settings
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| `tokenGuard.limitPercent` | `90` | Usage percentage at which the badge turns red. |
-| `tokenGuard.claudeConfigDir` | `""` | Claude Code config folder to read, for example `~/.claude-personal`. Leave it empty to detect the folder automatically. |
-| `tokenGuard.refreshSeconds` | `120` | How often to refresh usage in the background. The minimum is 60. Set it to `0` to turn off the refresh. |
-| `tokenGuard.claudePath` | `""` | Path to the `claude` binary used for the refresh. Leave it empty to use the binary that comes with the Claude Code extension, or `claude` from `PATH`. |
+| `usageMeter.limitPercent` | `90` | Usage percentage at which the badge turns red. |
+| `usageMeter.claudeConfigDir` | `""` | Claude Code config folder to read, for example `~/.claude-personal`. Leave it empty to detect the folder automatically. |
+| `usageMeter.refreshSeconds` | `120` | How often to refresh usage in the background. The minimum is 60. Set it to `0` to turn off the refresh. |
+| `usageMeter.claudePath` | `""` | Path to the `claude` binary used for the refresh. Leave it empty to use the binary that comes with the Claude Code extension, or `claude` from `PATH`. |
 
 ## Multiple Claude accounts
 
 If you keep one Claude account per config folder with `CLAUDE_CONFIG_DIR`, the badge reads the account that belongs to the current VS Code window. It looks for the folder in this order:
 
-1. The `tokenGuard.claudeConfigDir` setting.
+1. The `usageMeter.claudeConfigDir` setting.
 2. `CLAUDE_CONFIG_DIR` in `claudeCode.environmentVariables`, which is a setting of the Claude Code extension.
 3. `CLAUDE_CONFIG_DIR` in the environment that VS Code started with.
 4. The default Claude Code location, `~/.claude.json`.
@@ -97,3 +97,5 @@ claude -p /usage --no-session-persistence --output-format json --setting-sources
 ## License
 
 MIT
+
+This is a community project. It is not made or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic.

@@ -4,9 +4,7 @@ A status bar badge for VS Code that shows how much of your Claude Code 5-hour se
 
 Claude Code warns you at 95%, but a single large prompt can use up the rest before you have time to react, for example to write a handoff. You set your own limit (for example 90%). The badge text starts green, moves through yellow and orange, and turns red as usage gets closer to that limit. At the limit, the badge gets a red background.
 
-```
-$(pulse) Session 42% / 90%
-```
+![Badge at 9% with a 10% limit](images/badge.png)
 
 The badge is for information only. It does not block Claude Code.
 

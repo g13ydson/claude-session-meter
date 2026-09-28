@@ -1,0 +1,58 @@
+{
+  "name": "claude-token-guard",
+  "displayName": "Claude Token Guard",
+  "description": "Status bar badge with Claude Code 5-hour session usage that shifts from green to red as it nears your limit.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "tokenGuard.setLimit",
+        "title": "Token Guard: Set limit"
+      },
+      {
+        "command": "tokenGuard.refresh",
+        "title": "Token Guard: Refresh now"
+      }
+    ],
+    "configuration": {
+      "title": "Claude Token Guard",
+      "properties": {
+        "tokenGuard.limitPercent": {
+          "type": "number",
+          "default": 90,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Usage percent at which the badge turns red. Color shifts from green to red as usage nears this value."
+        },
+        "tokenGuard.claudeConfigDir": {
+          "type": "string",
+          "default": "",
+          "description": "Claude Code config folder (e.g. ~/.claude-personal). Empty: CLAUDE_CONFIG_DIR from claudeCode.environmentVariables, then from the VS Code launch environment, then the default Claude Code location."
+        },
+        "tokenGuard.refreshSeconds": {
+          "type": "number",
+          "default": 120,
+          "minimum": 0,
+          "description": "How often to refresh usage in the background by running `claude -p /usage` (no model call, 0 tokens). Minimum 60. 0 turns auto refresh off."
+        },
+        "tokenGuard.claudePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the claude binary used for refresh. Empty: the binary bundled with the Claude Code extension, else `claude` from PATH."
+        }
+      }
+    }
+  }
+}

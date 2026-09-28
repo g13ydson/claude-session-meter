@@ -25,7 +25,7 @@ The badge is for information only. It does not block Claude Code.
 The extension is not on the Marketplace yet. To install it from source:
 
 ```sh
-git clone <repo-url> ~/Projects/claude-token-guard
+git clone https://github.com/g13ydson/claude-token-guard.git ~/Projects/claude-token-guard
 ln -s ~/Projects/claude-token-guard ~/.vscode/extensions/local.claude-token-guard-0.0.1
 ```
 

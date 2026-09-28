@@ -1,13 +1,13 @@
 {
-  "name": "claude-token-guard",
-  "displayName": "Claude Token Guard",
+  "name": "claude-usage-meter",
+  "displayName": "Claude Usage Meter",
   "description": "Status bar badge with Claude Code 5-hour session usage that shifts from green to red as it nears your limit.",
   "version": "0.0.1",
   "publisher": "local",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/g13ydson/claude-token-guard.git"
+    "url": "https://github.com/g13ydson/claude-usage-meter.git"
   },
   "engines": {
     "vscode": "^1.80.0"
@@ -22,36 +22,36 @@
   "contributes": {
     "commands": [
       {
-        "command": "tokenGuard.setLimit",
-        "title": "Token Guard: Set limit"
+        "command": "usageMeter.setLimit",
+        "title": "Usage Meter: Set limit"
       },
       {
-        "command": "tokenGuard.refresh",
-        "title": "Token Guard: Refresh now"
+        "command": "usageMeter.refresh",
+        "title": "Usage Meter: Refresh now"
       }
     ],
     "configuration": {
-      "title": "Claude Token Guard",
+      "title": "Claude Usage Meter",
       "properties": {
-        "tokenGuard.limitPercent": {
+        "usageMeter.limitPercent": {
           "type": "number",
           "default": 90,
           "minimum": 1,
           "maximum": 100,
           "description": "Usage percent at which the badge turns red. Color shifts from green to red as usage nears this value."
         },
-        "tokenGuard.claudeConfigDir": {
+        "usageMeter.claudeConfigDir": {
           "type": "string",
           "default": "",
           "description": "Claude Code config folder (e.g. ~/.claude-personal). Empty: CLAUDE_CONFIG_DIR from claudeCode.environmentVariables, then from the VS Code launch environment, then the default Claude Code location."
         },
-        "tokenGuard.refreshSeconds": {
+        "usageMeter.refreshSeconds": {
           "type": "number",
           "default": 120,
           "minimum": 0,
           "description": "How often to refresh usage in the background by running `claude -p /usage` (no model call, 0 tokens). Minimum 60. 0 turns auto refresh off."
         },
-        "tokenGuard.claudePath": {
+        "usageMeter.claudePath": {
           "type": "string",
           "default": "",
           "description": "Path to the claude binary used for refresh. Empty: the binary bundled with the Claude Code extension, else `claude` from PATH."

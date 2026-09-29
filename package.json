@@ -2,7 +2,7 @@
   "name": "claude-session-meter",
   "displayName": "Claude Session Meter",
   "description": "Status bar badge with Claude Code 5-hour session usage that shifts from green to red as it nears your limit.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "g13ydson",
   "license": "MIT",
   "icon": "images/icon.png",

@@ -4,7 +4,7 @@ A status bar badge for VS Code that shows how much of your Claude Code 5-hour se
 
 Claude Code warns you at 95%, but a single large prompt can use up the rest before you have time to react, for example to write a handoff. You set your own limit (for example 90%). The badge text starts green, moves through yellow and orange, and turns red as usage gets closer to that limit. At the limit, the badge gets a red background.
 
-![Badge at 9% with a 10% limit](images/badge.png)
+![Badge at 9% with a 10% limit](https://raw.githubusercontent.com/g13ydson/claude-session-meter/main/images/badge.png)
 
 The badge is for information only. It does not block Claude Code.
 
@@ -20,20 +20,25 @@ The badge is for information only. It does not block Claude Code.
 
 ## Install
 
-The extension is not on the Marketplace yet. To install it from source:
+Install **Claude Session Meter** from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=g13ydson.claude-session-meter):
+
+- In VS Code, open the Extensions view, search for `Claude Session Meter`, and click **Install**.
+- Or run this command:
+
+  ```sh
+  code --install-extension g13ydson.claude-session-meter
+  ```
+
+The badge appears in the status bar after VS Code starts. You must have Claude Code installed and logged in.
+
+### Install from source
 
 ```sh
-git clone https://github.com/g13ydson/claude-session-meter.git ~/Projects/claude-session-meter
-ln -s ~/Projects/claude-session-meter ~/.vscode/extensions/g13ydson.claude-session-meter-0.0.1
+git clone https://github.com/g13ydson/claude-session-meter.git
+code --extensionDevelopmentPath "$PWD/claude-session-meter"
 ```
 
-Then run **Developer: Reload Window** in VS Code.
-
-To try it without installing, start VS Code in extension development mode:
-
-```sh
-code --extensionDevelopmentPath ~/Projects/claude-session-meter
-```
+This starts VS Code in extension development mode with the extension loaded.
 
 ## Usage
 

@@ -1,0 +1,5 @@
+.git/**
+.gitignore
+PLAN.md
+images/icon.svg
+*.vsix

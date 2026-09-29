@@ -14,12 +14,12 @@ function expandHome(p) {
 }
 
 // Claude account folder used by this VS Code window. Order:
-// 1. usageMeter.claudeConfigDir
+// 1. sessionMeter.claudeConfigDir
 // 2. CLAUDE_CONFIG_DIR in claudeCode.environmentVariables (Claude Code extension)
 // 3. CLAUDE_CONFIG_DIR in the environment VS Code was launched with
 // 4. none (default Claude Code location)
 function claudeConfigDir() {
-  const own = vscode.workspace.getConfiguration('usageMeter').get('claudeConfigDir');
+  const own = vscode.workspace.getConfiguration('sessionMeter').get('claudeConfigDir');
   if (own) return expandHome(own);
   const vars = vscode.workspace.getConfiguration('claudeCode').get('environmentVariables') || [];
   const fromClaudeCode = vars.find((v) => v?.name === 'CLAUDE_CONFIG_DIR')?.value;
@@ -38,10 +38,10 @@ function connect() {
   render();
 }
 
-// Claude binary: usageMeter.claudePath, else the one bundled with the
+// Claude binary: sessionMeter.claudePath, else the one bundled with the
 // Claude Code VS Code extension, else `claude` from PATH.
 function claudeBinary() {
-  const own = vscode.workspace.getConfiguration('usageMeter').get('claudePath');
+  const own = vscode.workspace.getConfiguration('sessionMeter').get('claudePath');
   if (own) return expandHome(own);
   const ext = vscode.extensions.getExtension('anthropic.claude-code');
   if (ext) {
@@ -69,15 +69,15 @@ function refresh() {
 
 function activate(context) {
   item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-  item.name = 'Claude Usage Meter';
-  item.command = 'usageMeter.setLimit';
+  item.name = 'Claude Session Meter';
+  item.command = 'sessionMeter.setLimit';
 
   // Re-render every minute so the reset countdown stays current.
   const timer = setInterval(render, 60 * 1000);
   let refreshTimer;
   const scheduleRefresh = () => {
     clearInterval(refreshTimer);
-    const seconds = vscode.workspace.getConfiguration('usageMeter').get('refreshSeconds', 120);
+    const seconds = vscode.workspace.getConfiguration('sessionMeter').get('refreshSeconds', 120);
     if (seconds > 0) {
       refreshTimer = setInterval(refresh, Math.max(seconds, 60) * 1000);
       refresh();
@@ -87,14 +87,14 @@ function activate(context) {
   context.subscriptions.push(
     item,
     { dispose: () => { fs.unwatchFile(file); clearInterval(timer); clearInterval(refreshTimer); } },
-    vscode.commands.registerCommand('usageMeter.refresh', refresh),
-    vscode.commands.registerCommand('usageMeter.setLimit', setLimit),
+    vscode.commands.registerCommand('sessionMeter.refresh', refresh),
+    vscode.commands.registerCommand('sessionMeter.setLimit', setLimit),
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (e.affectsConfiguration('usageMeter.claudeConfigDir') || e.affectsConfiguration('claudeCode.environmentVariables')) {
+      if (e.affectsConfiguration('sessionMeter.claudeConfigDir') || e.affectsConfiguration('claudeCode.environmentVariables')) {
         connect();
         refresh();
-      } else if (e.affectsConfiguration('usageMeter.refreshSeconds')) scheduleRefresh();
-      else if (e.affectsConfiguration('usageMeter')) render();
+      } else if (e.affectsConfiguration('sessionMeter.refreshSeconds')) scheduleRefresh();
+      else if (e.affectsConfiguration('sessionMeter')) render();
     })
   );
 
@@ -129,7 +129,7 @@ function gradient(ratio) {
 }
 
 function render() {
-  const limit = vscode.workspace.getConfiguration('usageMeter').get('limitPercent', 90);
+  const limit = vscode.workspace.getConfiguration('sessionMeter').get('limitPercent', 90);
   const usage = readUsage();
   const session = usage?.utilization?.five_hour;
   const week = usage?.utilization?.seven_day;
@@ -139,7 +139,7 @@ function render() {
   const used = session?.utilization == null ? null : reset && Date.now() > reset ? 0 : session.utilization;
 
   const tip = new vscode.MarkdownString();
-  tip.appendMarkdown(`**Claude Usage Meter** · limit ${limit}%\n\n`);
+  tip.appendMarkdown(`**Claude Session Meter** · limit ${limit}%\n\n`);
   if (used != null) tip.appendMarkdown(`Session (5h): ${Math.round(used)}%${reset ? ` · resets in ${timeLeft(reset)}` : ''}\n\n`);
   if (week?.utilization != null) tip.appendMarkdown(`Week: ${Math.round(week.utilization)}%\n\n`);
   if (usage?.fetchedAtMs) tip.appendMarkdown(`Updated ${new Date(usage.fetchedAtMs).toLocaleTimeString()}\n\n`);
@@ -168,7 +168,7 @@ function render() {
 }
 
 async function setLimit() {
-  const cfg = vscode.workspace.getConfiguration('usageMeter');
+  const cfg = vscode.workspace.getConfiguration('sessionMeter');
   const value = await vscode.window.showInputBox({
     prompt: 'Usage limit (%) at which the badge turns red',
     value: String(cfg.get('limitPercent', 90)),

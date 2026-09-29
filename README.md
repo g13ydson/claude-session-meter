@@ -1,10 +1,10 @@
-# Claude Usage Meter
+# Claude Session Meter
 
 A status bar badge for VS Code that shows how much of your Claude Code 5-hour session you have used.
 
 Claude Code warns you at 95%, but a single large prompt can use up the rest before you have time to react, for example to write a handoff. You set your own limit (for example 90%). The badge text starts green, moves through yellow and orange, and turns red as usage gets closer to that limit. At the limit, the badge gets a red background.
 
-![Badge at 9% with a 10% limit](images/badge.png)
+![Badge at 9% with a 10% limit](https://raw.githubusercontent.com/g13ydson/claude-session-meter/main/images/badge.png)
 
 The badge is for information only. It does not block Claude Code.
 
@@ -20,41 +20,46 @@ The badge is for information only. It does not block Claude Code.
 
 ## Install
 
-The extension is not on the Marketplace yet. To install it from source:
+Install **Claude Session Meter** from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=g13ydson.claude-session-meter):
+
+- In VS Code, open the Extensions view, search for `Claude Session Meter`, and click **Install**.
+- Or run this command:
+
+  ```sh
+  code --install-extension g13ydson.claude-session-meter
+  ```
+
+The badge appears in the status bar after VS Code starts. You must have Claude Code installed and logged in.
+
+### Install from source
 
 ```sh
-git clone https://github.com/g13ydson/claude-usage-meter.git ~/Projects/claude-usage-meter
-ln -s ~/Projects/claude-usage-meter ~/.vscode/extensions/local.claude-usage-meter-0.0.1
+git clone https://github.com/g13ydson/claude-session-meter.git
+code --extensionDevelopmentPath "$PWD/claude-session-meter"
 ```
 
-Then run **Developer: Reload Window** in VS Code.
-
-To try it without installing, start VS Code in extension development mode:
-
-```sh
-code --extensionDevelopmentPath ~/Projects/claude-usage-meter
-```
+This starts VS Code in extension development mode with the extension loaded.
 
 ## Usage
 
-- Click the badge, or run **Usage Meter: Set limit** from the Command Palette, to change the limit.
-- Run **Usage Meter: Refresh now** to update usage at once.
+- Click the badge, or run **Session Meter: Set limit** from the Command Palette, to change the limit.
+- Run **Session Meter: Refresh now** to update usage at once.
 - Hover over the badge to see the details.
 
 ### Settings
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| `usageMeter.limitPercent` | `90` | Usage percentage at which the badge turns red. |
-| `usageMeter.claudeConfigDir` | `""` | Claude Code config folder to read, for example `~/.claude-personal`. Leave it empty to detect the folder automatically. |
-| `usageMeter.refreshSeconds` | `120` | How often to refresh usage in the background. The minimum is 60. Set it to `0` to turn off the refresh. |
-| `usageMeter.claudePath` | `""` | Path to the `claude` binary used for the refresh. Leave it empty to use the binary that comes with the Claude Code extension, or `claude` from `PATH`. |
+| `sessionMeter.limitPercent` | `90` | Usage percentage at which the badge turns red. |
+| `sessionMeter.claudeConfigDir` | `""` | Claude Code config folder to read, for example `~/.claude-personal`. Leave it empty to detect the folder automatically. |
+| `sessionMeter.refreshSeconds` | `120` | How often to refresh usage in the background. The minimum is 60. Set it to `0` to turn off the refresh. |
+| `sessionMeter.claudePath` | `""` | Path to the `claude` binary used for the refresh. Leave it empty to use the binary that comes with the Claude Code extension, or `claude` from `PATH`. |
 
 ## Multiple Claude accounts
 
 If you keep one Claude account per config folder with `CLAUDE_CONFIG_DIR`, the badge reads the account that belongs to the current VS Code window. It looks for the folder in this order:
 
-1. The `usageMeter.claudeConfigDir` setting.
+1. The `sessionMeter.claudeConfigDir` setting.
 2. `CLAUDE_CONFIG_DIR` in `claudeCode.environmentVariables`, which is a setting of the Claude Code extension.
 3. `CLAUDE_CONFIG_DIR` in the environment that VS Code started with.
 4. The default Claude Code location, `~/.claude.json`.

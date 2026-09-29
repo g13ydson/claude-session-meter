@@ -1,13 +1,14 @@
 {
-  "name": "claude-usage-meter",
-  "displayName": "Claude Usage Meter",
+  "name": "claude-session-meter",
+  "displayName": "Claude Session Meter",
   "description": "Status bar badge with Claude Code 5-hour session usage that shifts from green to red as it nears your limit.",
-  "version": "0.0.1",
-  "publisher": "local",
+  "version": "0.0.2",
+  "publisher": "g13ydson",
   "license": "MIT",
+  "icon": "images/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/g13ydson/claude-usage-meter.git"
+    "url": "https://github.com/g13ydson/claude-session-meter.git"
   },
   "engines": {
     "vscode": "^1.80.0"
@@ -22,36 +23,36 @@
   "contributes": {
     "commands": [
       {
-        "command": "usageMeter.setLimit",
-        "title": "Usage Meter: Set limit"
+        "command": "sessionMeter.setLimit",
+        "title": "Session Meter: Set limit"
       },
       {
-        "command": "usageMeter.refresh",
-        "title": "Usage Meter: Refresh now"
+        "command": "sessionMeter.refresh",
+        "title": "Session Meter: Refresh now"
       }
     ],
     "configuration": {
-      "title": "Claude Usage Meter",
+      "title": "Claude Session Meter",
       "properties": {
-        "usageMeter.limitPercent": {
+        "sessionMeter.limitPercent": {
           "type": "number",
           "default": 90,
           "minimum": 1,
           "maximum": 100,
           "description": "Usage percent at which the badge turns red. Color shifts from green to red as usage nears this value."
         },
-        "usageMeter.claudeConfigDir": {
+        "sessionMeter.claudeConfigDir": {
           "type": "string",
           "default": "",
           "description": "Claude Code config folder (e.g. ~/.claude-personal). Empty: CLAUDE_CONFIG_DIR from claudeCode.environmentVariables, then from the VS Code launch environment, then the default Claude Code location."
         },
-        "usageMeter.refreshSeconds": {
+        "sessionMeter.refreshSeconds": {
           "type": "number",
           "default": 120,
           "minimum": 0,
           "description": "How often to refresh usage in the background by running `claude -p /usage` (no model call, 0 tokens). Minimum 60. 0 turns auto refresh off."
         },
-        "usageMeter.claudePath": {
+        "sessionMeter.claudePath": {
           "type": "string",
           "default": "",
           "description": "Path to the claude binary used for refresh. Empty: the binary bundled with the Claude Code extension, else `claude` from PATH."
